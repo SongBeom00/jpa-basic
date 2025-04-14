@@ -1,8 +1,14 @@
 package jpabasic.ex1hellojpa.hellojpa;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 //@SequenceGenerator(
@@ -10,8 +16,7 @@ import lombok.Setter;
 //        sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
 //        initialValue = 1, allocationSize = 50
 //)
-@Setter @Getter
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -29,8 +34,22 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
-    public Member() {
-    }
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
+
+//    @ManyToMany
+//    @JoinTable(name = "MEMBER_PRODUCT")
+//    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
+
+
+//    private String createdBy;
+//    private LocalDateTime createdDate;
+//    private String lastModifiedBy;
+//    private LocalDateTime lastModifiedDate;
 
 
     public Long getId() {
@@ -62,12 +81,4 @@ public class Member {
         team.getMembers().add(this);
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", team=" + team +
-                '}';
-    }
 }

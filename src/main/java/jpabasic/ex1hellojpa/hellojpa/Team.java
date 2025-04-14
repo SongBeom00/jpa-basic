@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
-public class Team {
+public class Team extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "TEAM_ID")
@@ -50,12 +49,4 @@ public class Team {
         this.members = members;
     }
 
-    @Override
-    public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", members=" + members +
-                '}';
-    }
 }
